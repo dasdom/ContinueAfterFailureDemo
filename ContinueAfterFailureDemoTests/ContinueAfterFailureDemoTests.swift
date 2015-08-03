@@ -7,12 +7,18 @@
 //
 
 import XCTest
+@testable import ContinueAfterFailureDemo
 
 class ContinueAfterFailureDemoTests: XCTestCase {
     
+    var viewController: ViewController!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        self.continueAfterFailure = false
+        
+        viewController = ViewController()
     }
     
     override func tearDown() {
@@ -20,16 +26,17 @@ class ContinueAfterFailureDemoTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testViewController_HasAddButtonInNavigationBar() {
+        let _ = viewController.view
+        
+        XCTAssertNotNil(viewController.navigationController)
+        XCTAssertNotNil(viewController.navigationItem.rightBarButtonItem)
+        let addBarButton = viewController.navigationItem.rightBarButtonItem!
+        let target = addBarButton.target
+        XCTAssertEqual(target as! ViewController, viewController, "The view controller should be the target of the right bar button")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+    func testSomethingElse() {
+        XCTAssert(true)
     }
-    
 }
